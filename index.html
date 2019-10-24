@@ -22,7 +22,9 @@
       <p>Reload for another joke!</p>
 
       <div class="content" id="chuck-norris">
-      </div>
+    </div>
+    <a href="javascript:window.location.reload()">Recharger la page</a>
+
     </div>
 
   </section>
@@ -30,6 +32,29 @@
   <!-- We need to load axios first! -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
   <script>
+
+    function fetchChuckJSON() {
+    
+    const url = `https://api.chucknorris.io/jokes/random`;
+    
+    axios.get(url)
+        .then(function(response) {
+        return response.data; // SUBTLE difference with Fetch: response.data instead of response.json()
+        })
+        .then(function(chucknorris) {
+        console.log('data decoded from JSON:', chucknorris);
+        // Build a block of HTML
+
+        
+        const chuckHtml = `
+            <img src="${chucknorris.icon_url}" />
+            <p><strong>${chucknorris.value}</strong></p>
+        `;
+        document.querySelector('#chuck-norris').innerHTML = chuckHtml;
+        });
+    }
+
+        fetchChuckJSON();
 
   </script>
 </body>
